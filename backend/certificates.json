@@ -1,0 +1,51 @@
+[
+    {
+        "id": 1,
+        "owner": "0x72235F773a7240c9A2b601Cff2df5C4D470ddb6A",
+        "energyWh": 12500,
+        "timestamp": 1763320152,
+        "txHash": "808c75306a0fd5a2528f99a4ad493d2ae2aa8d1730d8c32a9a67661a297c9b8d"
+    },
+    {
+        "id": 2,
+        "owner": "0x72235F773a7240c9A2b601Cff2df5C4D470ddb6A",
+        "energyKwh": 32.0,
+        "timestamp": 1763345293,
+        "txHash": "7bc754bf7bdad094924bf5a17bfe76bb0464c1a59fe76fc326e656ce373cf210"
+    },
+    {
+        "id": 3,
+        "owner": "0x72235F773a7240c9A2b601Cff2df5C4D470ddb6A",
+        "energyKwh": 22.0,
+        "timestamp": 1763345657,
+        "txHash": "060537f5ca5cb7688d7eeb314647e18c36b6963b8c9c9a99f95894833655e424"
+    },
+    {
+        "id": 4,
+        "owner": "0x72235F773a7240c9A2b601Cff2df5C4D470ddb6A",
+        "energyKwh": 15.0,
+        "timestamp": 1763345869,
+        "txHash": "610142c076bd921e9ce973737b494f3efc9a183a802ab6874c824a5d1574bb3e"
+    },
+    {
+        "id": 5,
+        "owner": "0x72235F773a7240c9A2b601Cff2df5C4D470ddb6A",
+        "energyKwh": 52.0,
+        "timestamp": 1763346430,
+        "txHash": "22f7e01090325b60712499ebfdfb96db96ddf1d147c558fd1744767ef634ef96"
+    },
+    {
+        "id": 6,
+        "owner": "0x72235F773a7240c9A2b601Cff2df5C4D470ddb6A",
+        "energyKwh": 50.0,
+        "timestamp": 1763349080,
+        "txHash": "3cf7500535099883e9926ab3cce842d15f9266ac92b3118a0a1e65976b7dd1d1"
+    },
+    {
+        "id": 7,
+        "owner": "0x72235F773a7240c9A2b601Cff2df5C4D470ddb6A",
+        "energyKwh": 23.0,
+        "timestamp": 1763351959,
+        "txHash": "955a48624d80a42c0bbbd32d785eccb4712827dd719339c238bcf3f45fe95419"
+    }
+]
