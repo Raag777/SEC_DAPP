@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\ASUS\\OneDrive\\Desktop\\M.TECH\\BT\\BT_Project\\SEC_DAPP\\backend-node\\hardhat\\contracts\\SolarEnergyCertificate.sol": {
+      "lastModificationDate": 1763577720468,
+      "contentHash": "25f4b1efb25076068eabae8ddc478314",
+      "sourceName": "contracts/SolarEnergyCertificate.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SolarEnergyCertificate"
+      ]
+    }
+  }
+}
