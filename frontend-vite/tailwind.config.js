@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx}",
   ],
   theme: {
     extend: {
@@ -10,7 +10,7 @@ export default {
         primary: "#4f46e5",
       },
       backdropBlur: {
-        xs: '2px',
+        xs: "2px",
       },
     },
   },
