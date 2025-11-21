@@ -2,12 +2,12 @@
 import keccak256 from "keccak256";
 import { MerkleTree } from "merkletreejs";
 import { ethers } from "ethers";
-import solarAbi from "../abi/SolarEnergyCertificate.json";
+import solarABI from "../abi/SolarEnergyCertificate.json" assert { type: "json" };
 
 const RPC_URL = process.env.RPC_URL || "http://127.0.0.1:8545";
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS || "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const provider = new ethers.JsonRpcProvider(RPC_URL);
-const contract = new ethers.Contract(CONTRACT_ADDRESS, solarAbi, provider);
+const contract = new ethers.Contract(CONTRACT_ADDRESS, solarABI, provider);
 
 /**
  * Build merkle tree of CertificateIssued + CertificatePurchased events for a block range.

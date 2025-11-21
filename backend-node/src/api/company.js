@@ -1,4 +1,5 @@
 import express from "express";
+import contract from "../services/blockchain.js";
 import {
     registerCompanyController,
     removeCompanyController,

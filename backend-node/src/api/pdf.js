@@ -3,7 +3,7 @@ import express from "express";
 import PDFDocument from "pdfkit";
 import QRCode from "qrcode";
 import { ethers } from "ethers";
-import solarAbi from "../abi/SolarEnergyCertificate.json";
+import solarABI from "../abi/SolarEnergyCertificate.json" assert { type: "json" };
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ if (!CONTRACT_ADDRESS) {
 }
 
 const provider = new ethers.JsonRpcProvider(RPC_URL);
-const contract = new ethers.Contract(CONTRACT_ADDRESS, solarAbi, provider);
+const contract = new ethers.Contract(CONTRACT_ADDRESS, solarABI, provider);
 
 /** Convert Base64 DataURL → Buffer */
 function dataURLtoBuffer(dataURL) {
