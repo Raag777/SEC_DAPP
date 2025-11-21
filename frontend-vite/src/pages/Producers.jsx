@@ -1,7 +1,7 @@
 // frontend-vite/src/pages/Producers.jsx
 import React, { useState, useEffect } from "react";
 import { useContract } from "@/context/ContractProvider";
-import Button from "@/components/ui/Button";
+import Button from "@/components/Button";
 import axios from "axios";
 
 export default function ProducersPage() {

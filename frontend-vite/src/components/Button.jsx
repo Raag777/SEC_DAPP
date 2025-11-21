@@ -1,4 +1,6 @@
+// frontend-vite/src/components/Button.jsx
 import { motion } from "framer-motion";
+
 export default function Button({ children, className = "", ...props }) {
   return (
     <motion.button

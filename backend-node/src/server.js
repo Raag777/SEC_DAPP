@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 // --- Import API routes ---
 import adminRoutes from "./api/admin.js";
 import producerRoutes from "./api/producers.js";
-import companyRoutes from "./api/companies.js";
+import companyRoutes from "./api/company.routes.js";
 import certificateRoutes from "./api/certificates.js";
 import merkleRoutes from "./api/merkle.js";
 import pdfRoutes from "./api/pdf.js";

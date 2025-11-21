@@ -1,4 +1,4 @@
-import Card from "@/components/ui/Card";
+import Card from "@/components/Card";
 import { Link } from "react-router-dom";
 
 export default function Home(){
