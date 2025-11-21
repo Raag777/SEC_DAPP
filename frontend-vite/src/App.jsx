@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashboardLayout from "@/layouts/DashboardLayout";
 
-// Pages
+// pages (we'll implement pages in later batches)
 import Home from "@/pages/Home";
 import Producers from "@/pages/Producers";
 import Companies from "@/pages/Companies";
@@ -17,7 +17,7 @@ function App() {
           <Route path="/producers" element={<Producers />} />
           <Route path="/companies" element={<Companies />} />
           <Route path="/admin" element={<AdminMint />} />
-          <Route path="/certificate/:tokenId" element={<CertificateView />} />
+          <Route path="/certificate/:id" element={<CertificateView />} />
         </Routes>
       </DashboardLayout>
     </Router>
