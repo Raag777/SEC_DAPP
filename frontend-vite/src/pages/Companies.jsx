@@ -1,87 +1,51 @@
-import { useState, useEffect } from "react";
-import { registerCompany, listCompanies } from "../api/companies";
-import { purchaseCertificate, getAllCertificates } from "../api/certificates";
-import { connectWallet } from "../blockchain/contract";
+// frontend-vite/src/pages/Companies.jsx
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Button from "@/components/ui/Button";
+import { useContract } from "@/context/ContractProvider";
 
-export default function Companies() {
-  const [address, setAddress] = useState("");
-  const [name, setName] = useState("");
-  const [companies, setCompanies] = useState([]);
+export default function CompaniesPage() {
+  const backend = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+  const { connectWallet, connected, walletAddress } = useContract();
   const [certs, setCerts] = useState([]);
-  const [wallet, setWallet] = useState("");
 
-  const load = async () => {
-    const c = await listCompanies();
-    const cert = await getAllCertificates();
-    setCompanies(c.data);
-    setCerts(cert.data);
-  };
+  async function loadAll() {
+    try {
+      const res = await axios.get(`${backend}/certificates.json`);
+      setCerts(res.data || []);
+    } catch (e) {
+      console.error(e);
+      setCerts([]);
+    }
+  }
 
-  const connect = async () => {
-    const w = await connectWallet();
-    setWallet(w);
-  };
-
-  useEffect(() => { load(); }, []);
-
-  const register = async () => {
-    await registerCompany(address, name);
-    alert("Company Registered!");
-    load();
-  };
-
-  const buy = async (id) => {
-    await purchaseCertificate(wallet, id);
-    alert("Purchase Successful!");
-    load();
-  };
+  useEffect(() => { loadAll(); }, []);
 
   return (
-    <div className="p-10">
-      <h1 className="title">Company Dashboard</h1>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Company Marketplace</h1>
 
-      {!wallet ? (
-        <button className="btn" onClick={connect}>Connect Wallet</button>
-      ) : (
-        <p className="text-gray-700">Wallet: {wallet}</p>
-      )}
-
-      <div className="max-w-xl space-y-3 mt-6">
-        <input
-          placeholder="Company Address"
-          className="input"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-
-        <input
-          placeholder="Company Name"
-          className="input"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-        <button className="btn" onClick={register}>Register Company</button>
+      <div className="mb-4">
+        {!connected ? <Button onClick={connectWallet}>Connect MetaMask</Button> : <div>Connected: <code>{walletAddress}</code></div>}
       </div>
 
-      <h2 className="subtitle mt-10">Available Certificates</h2>
-
-      <ul className="grid md:grid-cols-2 gap-4">
-        {certs.map((c) => (
-          <li key={c.certID} className="card">
-            <p><b>ID:</b> {c.certID}</p>
-            <p><b>Energy:</b> {c.energy} kWh</p>
-
-            {!c.owner && (
-              <button className="btn mt-3" onClick={() => buy(c.certID)}>
-                Buy This Certificate
-              </button>
-            )}
-
-            {c.owner && <p className="text-green-600 font-medium">Owned</p>}
-          </li>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {certs.map(c => (
+          <div key={c.id} className="bg-white rounded p-4 shadow">
+            <div className="flex justify-between">
+              <div>
+                <div className="font-medium">Certificate #{c.id}</div>
+                <div className="text-xs text-gray-500">{Math.round((c.energyWh||0)/1000)} kWh</div>
+                <div className="text-xs text-gray-400">Owner: {c.owner}</div>
+              </div>
+              <div className="flex flex-col items-end">
+                <a className="text-blue-600 underline mb-2" href={`${backend}/download_certificate/${c.id}`} target="_blank" rel="noreferrer">PDF</a>
+                <Button onClick={() => alert("Purchase flow to be implemented (backend + escrow)")}>Purchase</Button>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

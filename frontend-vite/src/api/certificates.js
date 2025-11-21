@@ -1,5 +1,11 @@
 import axiosClient from "./axiosClient";
 
+export const listCertificates = () => axiosClient.get("/certificates");
+
+export const getCertificate = (id) => axiosClient.get(`/getSEC/${id}`);
+
+export const downloadCertificate = (id) => `${import.meta.env.VITE_API_URL}/download_certificate/${id}`;
+
 export const getAllCertificates = () =>
   axiosClient.get("/certificates");
 
@@ -14,3 +20,5 @@ export const getMerkleRoot = () =>
 
 export const getMerkleProof = (certID) =>
   axiosClient.get(`/merkle/proof/${certID}`);
+
+

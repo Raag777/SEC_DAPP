@@ -1,60 +1,57 @@
-import { useState } from "react";
-import { adminMintCertificate } from "../api/admin";
-import { motion } from "framer-motion";
+// frontend-vite/src/pages/AdminMint.jsx
+import React, { useState, useEffect } from "react";
+import { useContract } from "@/context/ContractProvider";
+import Button from "@/components/ui/Button";
 
 export default function AdminMint() {
-  const [producer, setProducer] = useState("");
-  const [energy, setEnergy] = useState("");
-  const [certID, setCertID] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { connectWallet, walletAddress, connected, registerProducerAddress, removeProducerAddress, contract } = useContract();
+  const [producerAddr, setProducerAddr] = useState("");
+  const [message, setMessage] = useState("");
 
-  const mint = async () => {
-    if (!producer || !energy || !certID) return alert("Fill all fields!");
-    setLoading(true);
-
+  async function handleRegister() {
     try {
-      await adminMintCertificate(producer, energy, certID);
-      alert("Certificate Minted Successfully!");
-    } catch (err) {
-      alert("Mint failed!");
+      if (!producerAddr) return alert("Enter an address");
+      setMessage("Sending tx...");
+      await registerProducerAddress(producerAddr);
+      setMessage("Registered successfully.");
+    } catch (e) {
+      console.error(e);
+      setMessage("Error: " + (e?.message || e));
     }
+  }
 
-    setLoading(false);
-  };
+  async function handleRemove() {
+    try {
+      if (!producerAddr) return alert("Enter an address");
+      setMessage("Sending removal tx...");
+      await removeProducerAddress(producerAddr);
+      setMessage("Removed successfully.");
+    } catch (e) {
+      console.error(e);
+      setMessage("Error: " + (e?.message || e));
+    }
+  }
 
   return (
-    <div className="min-h-screen p-10 bg-gray-50">
-      <h1 className="text-3xl font-bold mb-6">Admin — Mint SEC Certificate</h1>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Admin Panel — Producers</h1>
 
-      <div className="space-y-4 max-w-xl">
-        <input
-          placeholder="Producer Address"
-          className="input"
-          value={producer}
-          onChange={(e) => setProducer(e.target.value)}
-        />
+      <div className="mb-4">
+        {!connected ? (
+          <Button onClick={connectWallet}>Connect MetaMask</Button>
+        ) : (
+          <div className="text-sm">Connected: <code>{walletAddress}</code></div>
+        )}
+      </div>
 
-        <input
-          placeholder="Energy Generated (kWh)"
-          className="input"
-          value={energy}
-          onChange={(e) => setEnergy(e.target.value)}
-        />
-
-        <input
-          placeholder="Certificate ID (e.g., P1_ID1)"
-          className="input"
-          value={certID}
-          onChange={(e) => setCertID(e.target.value)}
-        />
-
-        <button
-          onClick={mint}
-          className="btn"
-          disabled={loading}
-        >
-          {loading ? "Minting..." : "Mint Certificate"}
-        </button>
+      <div className="bg-white p-4 rounded shadow max-w-2xl">
+        <label className="block text-sm mb-2">Producer Address</label>
+        <input value={producerAddr} onChange={(e) => setProducerAddr(e.target.value)} placeholder="0x..." className="w-full p-2 border rounded mb-3" />
+        <div className="flex gap-3">
+          <Button onClick={handleRegister}>Register Producer (on-chain)</Button>
+          <Button className="bg-red-600" onClick={handleRemove}>Remove Producer</Button>
+        </div>
+        <div className="mt-3 text-sm text-gray-600">{message}</div>
       </div>
     </div>
   );

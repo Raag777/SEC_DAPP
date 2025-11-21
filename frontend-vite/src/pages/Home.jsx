@@ -1,57 +1,23 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { connectWallet } from "../blockchain/contract";
-import { useNavigate } from "react-router-dom";
+import Card from "@/components/ui/Card";
+import { Link } from "react-router-dom";
 
-export default function Home() {
-  const [wallet, setWallet] = useState(null);
-  const navigate = useNavigate();
-
-  const connect = async () => {
-    const acc = await connectWallet();
-    setWallet(acc);
-  };
-
+export default function Home(){
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-10">
-      <motion.h1
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-4xl font-semibold mb-8"
-      >
-        Solar Energy Certificate DApp
-      </motion.h1>
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card><h3 className="text-sm text-gray-500">Total SECs</h3><div className="text-2xl font-bold">—</div></Card>
+        <Card><h3 className="text-sm text-gray-500">Active Producers</h3><div className="text-2xl font-bold">—</div></Card>
+        <Card><h3 className="text-sm text-gray-500">Certificates in Circulation</h3><div className="text-2xl font-bold">—</div></Card>
+      </div>
 
-      {!wallet ? (
-        <button
-          onClick={connect}
-          className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
-        >
-          Connect Wallet
-        </button>
-      ) : (
-        <div className="w-full max-w-xl mt-10">
-          <h2 className="text-xl mb-3 font-medium">Select Your Role:</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <RoleCard title="Admin" onClick={() => navigate("/admin")} />
-            <RoleCard title="Producer" onClick={() => navigate("/producers")} />
-            <RoleCard title="Company" onClick={() => navigate("/companies")} />
-          </div>
+      <Card>
+        <h2 className="text-lg font-semibold">Quick Links</h2>
+        <div className="flex gap-3 mt-3">
+          <Link to="/producers" className="px-3 py-2 bg-sky-600 text-white rounded">Producers</Link>
+          <Link to="/companies" className="px-3 py-2 bg-green-600 text-white rounded">Companies</Link>
+          <Link to="/admin" className="px-3 py-2 bg-gray-600 text-white rounded">Admin</Link>
         </div>
-      )}
+      </Card>
     </div>
-  );
-}
-
-function RoleCard({ title, onClick }) {
-  return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      onClick={onClick}
-      className="p-6 cursor-pointer border rounded-xl bg-white shadow hover:shadow-lg transition"
-    >
-      <h3 className="text-xl font-semibold text-center">{title}</h3>
-    </motion.div>
   );
 }

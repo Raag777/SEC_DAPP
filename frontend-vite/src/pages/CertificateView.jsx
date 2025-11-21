@@ -1,59 +1,38 @@
-import { useState, useEffect } from "react";
-import { getAllCertificates, getMerkleProof, getMerkleRoot } from "../api/certificates";
+// frontend-vite/src/pages/CertificateView.jsx
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function CertificateView() {
-  const [certs, setCerts] = useState([]);
-  const [selected, setSelected] = useState(null);
-  const [proof, setProof] = useState([]);
-  const [root, setRoot] = useState("");
+  const { tokenId } = useParams();
+  const backend = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+  const [cert, setCert] = useState(null);
 
   useEffect(() => {
-    load();
-  }, []);
+    (async () => {
+      if (!tokenId) return;
+      try {
+        const res = await fetch(`${backend}/getSEC/${Number(tokenId)}`);
+        const data = await res.json();
+        if (!data.error) setCert(data);
+      } catch (e) { setCert(null); }
+    })();
+  }, [tokenId]);
 
-  const load = async () => {
-    const c = await getAllCertificates();
-    const r = await getMerkleRoot();
-    setCerts(c.data);
-    setRoot(r.data.root);
-  };
-
-  const showProof = async (id) => {
-    const p = await getMerkleProof(id);
-    setSelected(id);
-    setProof(p.data.proof);
-  };
+  if (!cert) return <div className="p-6">Certificate not found</div>;
 
   return (
-    <div className="p-10">
-      <h1 className="title">Certificates & Merkle Proof</h1>
-
-      <p className="mt-2 mb-6 text-gray-700">
-        <b>Merkle Root:</b> {root}
-      </p>
-
-      <ul className="grid md:grid-cols-2 gap-4">
-        {certs.map((c) => (
-          <li key={c.certID} className="card">
-            <p><b>ID:</b> {c.certID}</p>
-            <p><b>Energy:</b> {c.energy} kWh</p>
-            <p><b>Owner:</b> {c.owner || "None"}</p>
-
-            <button className="btn mt-2" onClick={() => showProof(c.certID)}>
-              Generate Proof
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      {selected && (
-        <div className="card mt-10">
-          <h2 className="subtitle">Proof for {selected}</h2>
-          <pre className="text-sm mt-3 whitespace-pre-wrap">
-            {JSON.stringify(proof, null, 2)}
-          </pre>
+    <div className="p-6">
+      <div className="bg-white p-6 rounded shadow max-w-xl">
+        <div className="text-2xl font-bold mb-4">Solar Energy Certificate</div>
+        <div>Certificate ID: #{cert.id}</div>
+        <div>Owner: {cert.owner}</div>
+        <div>Energy: {Math.round((cert.energyWh || cert.energyProduced || 0) / 1000)} kWh</div>
+        <div>Timestamp: {new Date(cert.timestamp * 1000).toLocaleString()}</div>
+        <div className="mt-4">
+          <a className="text-blue-600 underline" href={`${backend}/download_certificate/${cert.id}`} target="_blank" rel="noreferrer">Download PDF</a>
         </div>
-      )}
+      </div>
     </div>
   );
 }
