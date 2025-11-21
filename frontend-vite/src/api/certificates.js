@@ -1,24 +1,11 @@
-import axiosClient from "./axiosClient";
-
-export const listCertificates = () => axiosClient.get("/certificates");
-
-export const getCertificate = (id) => axiosClient.get(`/getSEC/${id}`);
-
-export const downloadCertificate = (id) => `${import.meta.env.VITE_API_URL}/download_certificate/${id}`;
+// src/api/certificates.js
+import api from "./axiosClient";
 
 export const getAllCertificates = () =>
-  axiosClient.get("/certificates");
+  api.get("/certificates/all");
 
-export const getByOwner = (address) =>
-  axiosClient.get(`/certificates/owner/${address}`);
+export const getCertificate = (id) =>
+  api.get(`/certificates/${id}`);
 
-export const purchaseCertificate = (buyer, certID) =>
-  axiosClient.post("/certificates/purchase", { buyer, certID });
-
-export const getMerkleRoot = () =>
-  axiosClient.get("/merkle/root");
-
-export const getMerkleProof = (certID) =>
-  axiosClient.get(`/merkle/proof/${certID}`);
-
-
+export const getCertificatesOfOwner = (address) =>
+  api.get(`/certificates/owner/${address}`);

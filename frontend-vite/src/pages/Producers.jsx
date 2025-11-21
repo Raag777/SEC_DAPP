@@ -67,6 +67,7 @@ export default function ProducersPage() {
                 </div>
                 <div>
                   <a className="text-blue-600 underline" href={`${import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"}/download_certificate/${c.id}`} target="_blank" rel="noreferrer">PDF</a>
+                  <Button onClick={() => downloadReceipt(cert.id, cert.txHash)} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg"> Download Receipt </Button>
                 </div>
               </div>
             ))}

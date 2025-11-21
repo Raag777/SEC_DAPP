@@ -36,6 +36,8 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
+          <span className="text-sm">🌙</span>
+          <input type="checkbox" checked={dark} onChange={() => setDark(d => !d)} />
           <button onClick={connect} className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm">
             {account ? `${account.slice(0,6)}...${account.slice(-4)}` : "Connect Wallet"}
           </button>

@@ -1,10 +1,11 @@
-import axiosClient from "./axiosClient";
+// src/api/producers.js
+import api from "./axiosClient";
 
-export const registerProducer = (address, name) =>
-  axiosClient.post("/producers/register", { address, name });
+export const issueCertificate = (owner, energyWh) =>
+  api.post("/producers/issue", { owner, energyWh });
 
-export const removeProducer = (address) =>
-  axiosClient.post("/producers/remove", { address });
+export const setProducerPrice = (priceWei) =>
+  api.post("/producers/setPrice", { priceWei });
 
-export const listProducers = () =>
-  axiosClient.get("/producers");
+export const getProducerList = () =>
+  api.get("/producers/list");

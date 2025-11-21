@@ -1,10 +1,11 @@
-import axiosClient from "./axiosClient";
+// src/api/companies.js
+import api from "./axiosClient";
 
-export const registerCompany = (address, name) =>
-  axiosClient.post("/companies/register", { address, name });
+export const buyCertificate = (id, priceWei) =>
+  api.post("/companies/buy", { id, priceWei });
 
-export const removeCompany = (address) =>
-  axiosClient.post("/companies/remove", { address });
+export const retireCertificate = (id) =>
+  api.post("/companies/retire", { id });
 
-export const listCompanies = () =>
-  axiosClient.get("/companies");
+export const getCompanies = () =>
+  api.get("/companies/list");

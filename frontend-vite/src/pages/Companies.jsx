@@ -1,51 +1,72 @@
-// frontend-vite/src/pages/Companies.jsx
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Button from "@/components/ui/Button";
-import { useContract } from "@/context/ContractProvider";
+// src/pages/Companies.jsx
+import React, { useState } from "react";
+import api from "@/api/axiosClient";
+import Button from "@/components/Button";
+import Card from "@/components/Card";
+import { downloadBlob } from "@/utils/download";
 
-export default function CompaniesPage() {
-  const backend = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-  const { connectWallet, connected, walletAddress } = useContract();
-  const [certs, setCerts] = useState([]);
+/**
+ * Company page (simplified)
+ * - buy certificate by ID (calls backend)
+ * - download purchase receipt PDF if backend returns receiptId
+ *
+ * Backend endpoints expected:
+ * POST /companies/buy     { id }
+ * GET  /api/receipt/:id   -> PDF blob
+ */
 
-  async function loadAll() {
+export default function Companies() {
+  const [certId, setCertId] = useState("");
+  const [status, setStatus] = useState("");
+  const [lastTx, setLastTx] = useState(null);
+
+  async function buyCertificate() {
+    if (!certId) return setStatus("Enter certificate ID");
+    setStatus("Sending purchase request...");
     try {
-      const res = await axios.get(`${backend}/certificates.json`);
-      setCerts(res.data || []);
+      const resp = await api.post("/companies/buy", { id: Number(certId) });
+      // backend should return { txHash, receiptId }
+      const txHash = resp.data.txHash || resp.data.tx || resp.data.receiptId;
+      const receiptId = resp.data.receiptId;
+
+      setLastTx(txHash);
+      setStatus("Purchase successful — tx: " + (txHash || "n/a"));
+
+      if (receiptId) {
+        // download receipt PDF
+        const blobResp = await api.get(`/api/receipt/${receiptId}`, { responseType: "blob" });
+        downloadBlob(blobResp.data, `purchase_receipt_${certId}.pdf`);
+        setStatus((s)=> s + " — receipt downloaded");
+      }
     } catch (e) {
       console.error(e);
-      setCerts([]);
+      setStatus("Purchase failed: " + (e?.response?.data?.error || e.message));
     }
   }
-
-  useEffect(() => { loadAll(); }, []);
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Company Marketplace</h1>
 
-      <div className="mb-4">
-        {!connected ? <Button onClick={connectWallet}>Connect MetaMask</Button> : <div>Connected: <code>{walletAddress}</code></div>}
-      </div>
+      <Card>
+        <div className="flex gap-3 items-center">
+          <input value={certId} onChange={(e)=>setCertId(e.target.value)} placeholder="Certificate ID" className="flex-1 border p-2 rounded" />
+          <Button onClick={buyCertificate}>Buy SEC</Button>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {certs.map(c => (
-          <div key={c.id} className="bg-white rounded p-4 shadow">
-            <div className="flex justify-between">
-              <div>
-                <div className="font-medium">Certificate #{c.id}</div>
-                <div className="text-xs text-gray-500">{Math.round((c.energyWh||0)/1000)} kWh</div>
-                <div className="text-xs text-gray-400">Owner: {c.owner}</div>
-              </div>
-              <div className="flex flex-col items-end">
-                <a className="text-blue-600 underline mb-2" href={`${backend}/download_certificate/${c.id}`} target="_blank" rel="noreferrer">PDF</a>
-                <Button onClick={() => alert("Purchase flow to be implemented (backend + escrow)")}>Purchase</Button>
-              </div>
-            </div>
+        <p className="mt-3 text-sm text-gray-600">{status}</p>
+
+        {lastTx && (
+          <div className="mt-4 text-sm">
+            <strong>Last tx:</strong> <span className="font-mono">{lastTx}</span>
           </div>
-        ))}
-      </div>
+        )}
+      </Card>
+
+      <Card className="mt-6">
+        <h3 className="font-semibold">Verified Certificates / Search</h3>
+        <p className="text-sm text-gray-500 mt-2">Use the blockchain explorer page to search and verify SECs by ID or tx hash.</p>
+      </Card>
     </div>
   );
 }

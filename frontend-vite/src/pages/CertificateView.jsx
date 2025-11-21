@@ -31,6 +31,7 @@ export default function CertificateView() {
         <div>Timestamp: {new Date(cert.timestamp * 1000).toLocaleString()}</div>
         <div className="mt-4">
           <a className="text-blue-600 underline" href={`${backend}/download_certificate/${cert.id}`} target="_blank" rel="noreferrer">Download PDF</a>
+          <Button onClick={() => downloadReceipt(certificate.id, certificate.txHash)} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl">Download Purchase Receipt</Button>
         </div>
       </div>
     </div>

@@ -15,6 +15,10 @@ import producerRoutes from "./api/producers.js";
 import companyRoutes from "./api/companies.js";
 import certificateRoutes from "./api/certificates.js";
 import merkleRoutes from "./api/merkle.js";
+import pdfRoutes from "./api/pdf.js";
+import receiptRoutes from "./api/receipt.js";
+
+
 
 // --- Attach routes ---
 app.use("/admin", adminRoutes);
@@ -22,6 +26,8 @@ app.use("/producers", producerRoutes);
 app.use("/companies", companyRoutes);
 app.use("/certificates", certificateRoutes);
 app.use("/merkle", merkleRoutes);
+app.use("/api", pdfRoutes);
+app.use("/api", receiptRoutes);
 
 app.get("/", (req, res) => {
     res.send("SEC Backend Running...");
