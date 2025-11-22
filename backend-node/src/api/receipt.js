@@ -3,7 +3,7 @@ import express from "express";
 import PDFDocument from "pdfkit";
 import QRCode from "qrcode";
 import { ethers } from "ethers";
-import solarABI from "../abi/SolarEnergyCertificate.json" assert { type: "json" };
+import solarABI from "../abi/SolarEnergyCertificate.json" with { type: "json" };
 
 const router = express.Router();
 

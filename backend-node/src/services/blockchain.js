@@ -1,7 +1,7 @@
 // backend-node/src/services/blockchain.js
 import dotenv from "dotenv";
 import { ethers } from "ethers";
-import solarABI from "../abi/SolarEnergyCertificate.json" assert { type: "json" };
+import solarABI from "../abi/SolarEnergyCertificate.json" with { type: "json" };
 
 dotenv.config();
 

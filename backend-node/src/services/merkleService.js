@@ -2,7 +2,7 @@
 import keccak256 from "keccak256";
 import { MerkleTree } from "merkletreejs";
 import { ethers } from "ethers";
-import solarABI from "../abi/SolarEnergyCertificate.json" assert { type: "json" };
+import solarABI from "../abi/SolarEnergyCertificate.json" with { type: "json" };
 import dotenv from "dotenv";
 
 dotenv.config();
