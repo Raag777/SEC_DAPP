@@ -1,9 +1,12 @@
-import { ethers } from "ethers";
+// backend-node/src/utils/validation.js
+import { isAddress as ethersIsAddress } from "ethers";
 
-export const isAddress = (addr) => {
-    try {
-        return ethers.isAddress(addr);
-    } catch {
-        return false;
-    }
-};
+export function isAddress(addr) {
+  if (!addr || typeof addr !== "string") return false;
+  try {
+    // ethers v6: will throw on invalid checksum sometimes, so use basic test
+    return ethersIsAddress(addr);
+  } catch {
+    return false;
+  }
+}

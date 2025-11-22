@@ -1,81 +1,89 @@
-import { ethers } from "ethers";
-import { contractRW, contractRO } from "./blockchain.js";
+// backend-node/src/services/admin.service.js
+import { contractRO, contractRW } from "./blockchain.js";
 import { isAddress } from "../utils/validation.js";
 
-// ------- LISTS -------
 export const listProducersService = async () => {
-    return await contractRO.producerList();
+  const list = await contractRO.producers();
+  return { producers: list };
 };
 
 export const listCompaniesService = async () => {
-    return await contractRO.companyList();
+  const list = await contractRO.companies();
+  return { companies: list };
 };
 
-// ------- PRODUCER -------
 export const registerProducerService = async (address) => {
-    if (!isAddress(address)) throw new Error("Invalid address");
-
-    const tx = await contractRW.registerProducer(address);
-    const receipt = await tx.wait();
-
-    return {
-        success: true,
-        txHash: receipt.transactionHash,
-        producers: await contractRO.producerList()
-    };
+  if (!isAddress(address)) throw new Error("Invalid address");
+  const tx = await contractRW.registerProducer(address);
+  const receipt = await tx.wait();
+  const list = await contractRO.producers();
+  return {
+    message: "Producer registered",
+    txHash: receipt.transactionHash,
+    blockNumber: receipt.blockNumber,
+    gasUsed: receipt.gasUsed?.toString?.() ?? null,
+    producers: list,
+  };
 };
 
 export const removeProducerService = async (address) => {
-    if (!isAddress(address)) throw new Error("Invalid address");
-
-    const tx = await contractRW.removeProducer(address);
-    const receipt = await tx.wait();
-
-    return {
-        success: true,
-        txHash: receipt.transactionHash,
-        producers: await contractRO.producerList()
-    };
+  if (!isAddress(address)) throw new Error("Invalid address");
+  const tx = await contractRW.removeProducer(address);
+  const receipt = await tx.wait();
+  const list = await contractRO.producers();
+  return {
+    message: "Producer removed",
+    txHash: receipt.transactionHash,
+    blockNumber: receipt.blockNumber,
+    gasUsed: receipt.gasUsed?.toString?.() ?? null,
+    producers: list,
+  };
 };
 
-// ------- COMPANY -------
 export const registerCompanyService = async (address) => {
-    if (!isAddress(address)) throw new Error("Invalid address");
-
-    const tx = await contractRW.registerCompany(address);
-    const receipt = await tx.wait();
-
-    return {
-        success: true,
-        txHash: receipt.transactionHash,
-        companies: await contractRO.companyList()
-    };
+  if (!isAddress(address)) throw new Error("Invalid address");
+  const tx = await contractRW.registerCompany(address);
+  const receipt = await tx.wait();
+  const list = await contractRO.companies();
+  return {
+    message: "Company registered",
+    txHash: receipt.transactionHash,
+    blockNumber: receipt.blockNumber,
+    gasUsed: receipt.gasUsed?.toString?.() ?? null,
+    companies: list,
+  };
 };
 
 export const removeCompanyService = async (address) => {
-    if (!isAddress(address)) throw new Error("Invalid address");
-
-    const tx = await contractRW.removeCompany(address);
-    const receipt = await tx.wait();
-
-    return {
-        success: true,
-        txHash: receipt.transactionHash,
-        companies: await contractRO.companyList()
-    };
+  if (!isAddress(address)) throw new Error("Invalid address");
+  const tx = await contractRW.removeCompany(address);
+  const receipt = await tx.wait();
+  const list = await contractRO.companies();
+  return {
+    message: "Company removed",
+    txHash: receipt.transactionHash,
+    blockNumber: receipt.blockNumber,
+    gasUsed: receipt.gasUsed?.toString?.() ?? null,
+    companies: list,
+  };
 };
 
-// ------- POLICY -------
 export const setMinEnergyService = async (minEnergyWh) => {
-    const tx = await contractRW.setMinEnergyWh(minEnergyWh);
-    const receipt = await tx.wait();
-
-    return { success: true, txHash: receipt.transactionHash };
+  const tx = await contractRW.setMinEnergyWh(minEnergyWh);
+  const receipt = await tx.wait();
+  return {
+    message: "Min energy updated",
+    txHash: receipt.transactionHash,
+    blockNumber: receipt.blockNumber,
+  };
 };
 
 export const setDefaultPriceService = async (priceWei) => {
-    const tx = await contractRW.setDefaultPriceWei(priceWei);
-    const receipt = await tx.wait();
-
-    return { success: true, txHash: receipt.transactionHash };
+  const tx = await contractRW.setDefaultPriceWei(priceWei);
+  const receipt = await tx.wait();
+  return {
+    message: "Default price updated",
+    txHash: receipt.transactionHash,
+    blockNumber: receipt.blockNumber,
+  };
 };
