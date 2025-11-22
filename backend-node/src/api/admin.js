@@ -1,16 +1,31 @@
 import express from "express";
-import contract from "../services/blockchain.js";
+import {
+    registerProducerController,
+    removeProducerController,
+    registerCompanyController,
+    removeCompanyController,
+    listProducersController,
+    listCompaniesController,
+    setMinEnergyController,
+    setDefaultPriceController
+} from "../controllers/admin.controller.js";
 
 const router = express.Router();
 
-router.post("/add", async (req, res) => {
-    try {
-        const { address } = req.body;
-        const tx = await contract.addAdmin(address);
-        res.json({ tx: tx.hash });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
+// ------- LISTS -------
+router.get("/producers", listProducersController);
+router.get("/companies", listCompaniesController);
+
+// ------- PRODUCER -------
+router.post("/registerProducer", registerProducerController);
+router.post("/removeProducer", removeProducerController);
+
+// ------- COMPANY -------
+router.post("/registerCompany", registerCompanyController);
+router.post("/removeCompany", removeCompanyController);
+
+// ------- POLICY -------
+router.post("/setMinEnergy", setMinEnergyController);
+router.post("/setDefaultPrice", setDefaultPriceController);
 
 export default router;
