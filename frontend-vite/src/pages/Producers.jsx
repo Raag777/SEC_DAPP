@@ -43,20 +43,24 @@ export default function ProducersPage() {
 
       <div className="mb-4">
         {!connected ? (
-          <Button onClick={connectWallet}>Connect MetaMask</Button>
+          <Button onClick={connectWallet} className="neon-pulse">Connect MetaMask</Button>
         ) : (
           <div className="text-sm">Connected: <code>{walletAddress}</code></div>
         )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-4 rounded shadow">
+        <div className="p-4 rounded shadow" 
+             style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>
+
           <label className="block text-sm mb-2">Energy (kWh)</label>
           <input value={energy} onChange={(e)=>setEnergy(e.target.value)} placeholder="e.g., 12.5" className="w-full p-2 border rounded mb-3" />
-          <Button onClick={handleIssue}>Issue Certificate (via backend)</Button>
+          <Button onClick={handleIssue} className="bg-neonBlue/20 hover:bg-neonBlue text-black">Issue Certificate </Button>
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
+        <div className="p-4 rounded shadow" 
+             style={{ background: "var(--bg-card)", color: "var(--text-primary)" }}>
+
           <h3 className="font-semibold mb-2">Your Certificates</h3>
           <div className="space-y-2">
             {certs.length === 0 ? <div className="text-sm text-gray-500">No certs</div> : certs.map(c=>(
@@ -67,7 +71,7 @@ export default function ProducersPage() {
                 </div>
                 <div>
                   <a className="text-blue-600 underline" href={`${import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"}/download_certificate/${c.id}`} target="_blank" rel="noreferrer">PDF</a>
-                  <Button onClick={() => downloadReceipt(cert.id, cert.txHash)} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg"> Download Receipt </Button>
+                  <Button onClick={() => downloadReceipt(cert.id, cert.txHash)} className="bg-neonBlue/20 hover:bg-neonBlue text-black"> Download Receipt </Button>
                 </div>
               </div>
             ))}

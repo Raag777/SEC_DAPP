@@ -138,13 +138,13 @@ export default function AdminMint() {
 
           <div className="flex gap-3">
             <input className="flex-1 border p-2 rounded" placeholder="0x..." value={addr} onChange={(e)=>setAddr(e.target.value)} />
-            <Button className="bg-green-600" onClick={registerProducer}>Register Producer</Button>
+            <Button className="neon-pulse" onClick={registerProducer}>Register Producer</Button>
             <Button className="bg-red-600" onClick={removeProducer}>Remove Producer</Button>
           </div>
 
           <div className="mt-3 flex gap-3">
             <input className="flex-1 border p-2 rounded" placeholder="0x..." value={addr} onChange={(e)=>setAddr(e.target.value)} />
-            <Button className="bg-green-600" onClick={registerCompany}>Register Company</Button>
+            <Button className="neon-pulse" onClick={registerCompany}>Register Company</Button>
             <Button className="bg-red-600" onClick={removeCompany}>Remove Company</Button>
           </div>
 

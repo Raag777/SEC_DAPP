@@ -4,3 +4,245 @@
 @import "@fontsource/inter/700.css";
 
 @import "tailwindcss";
+
+/* ---------------------------------------------------------------------- */
+/* 🔥 FULL NEON THEME PACK — CLEANED & OPTIMIZED                         */
+/* ---------------------------------------------------------------------- */
+
+:root {
+  --neon-base: #00eaff;
+}
+
+/* LIGHT MODE UI COLORS */
+body {
+  --bg-card: white;
+  --bg-surface: #f8fafc;
+  --text-primary: #1e293b;
+}
+
+/* DARK MODE UI COLORS */
+.dark body {
+  --bg-card: rgba(10, 10, 20, 0.6);
+  --bg-surface: #06070d;
+  --text-primary: #e2e8f0;
+}
+
+
+.neon-glow {
+  box-shadow:
+    0 0 6px rgba(0, 255, 255, 0.8),
+    0 0 12px rgba(0, 255, 255, 0.7),
+    0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+.neon-border {
+  border: 1px solid rgba(0, 255, 255, 0.4);
+  box-shadow:
+    0 0 8px rgba(0, 255, 255, 0.7),
+    0 0 16px rgba(0, 255, 255, 0.5),
+    inset 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.neon-text {
+  color: #00eaff;
+  text-shadow:
+    0 0 6px #00eaff,
+    0 0 12px #00eaffaa;
+}
+
+.neon-hover:hover {
+  box-shadow:
+    0 0 10px #00fff2,
+    0 0 20px #00fff2;
+}
+
+/* Neon Card */
+.neon-card {
+  background: rgba(10, 10, 20, 0.6);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  box-shadow:
+    0 0 12px rgba(0, 255, 255, 0.35),
+    0 0 24px rgba(0, 255, 255, 0.25);
+}
+
+
+
+/* Cyberpunk Gradient */
+.cyber-gradient {
+  background: linear-gradient(135deg, #00eaff 0%, #7a00ff 100%);
+}
+
+/* Animated Glow Underline */
+.glow-underline {
+  position: relative;
+}
+.glow-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background: #00eaff;
+  box-shadow: 0 0 8px #00eaff;
+  transition: width 0.3s ease;
+}
+.glow-underline:hover::after {
+  width: 100%;
+}
+
+/* Light Mode Inputs */
+input, select {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+/* Dark Mode Inputs */
+.dark input, 
+.dark select {
+  background: #0d1528;
+  color: #00eaff;
+  border: 1px solid rgba(0,255,255,0.4);
+  box-shadow: 0 0 10px rgba(0,255,255,0.2);
+}
+
+.dark input:focus,
+.dark select:focus {
+  box-shadow: 0 0 15px #00eaff;
+}
+
+/* Cyberpunk Input Special Glow */
+.cyberpunk-input {
+  box-shadow:
+    inset 0 0 12px rgba(0, 255, 255, 0.15),
+    0 0 10px rgba(0, 255, 255, 0.2);
+}
+.cyberpunk-input:focus {
+  box-shadow:
+    inset 0 0 14px rgba(0, 255, 255, 0.3),
+    0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+
+/* Global Neon Background */
+/* 🌞 LIGHT MODE */
+body {
+  background: #f8fafc;           /* soft light background */
+  color: #0f172a;                /* dark text */
+}
+
+/* 🌙 DARK MODE (Tailwind's .dark class) */
+.dark body {
+  background: radial-gradient(circle at top, #0a0f1f 0%, #05060a 100%);
+  color: #e2e8f0;
+}
+
+
+/* Global Scrollbar Neon */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #00eaff;
+  box-shadow: 0 0 10px #00eaff;
+  border-radius: 10px;
+}
+
+/* =========================================================
+   NEON ANIMATIONS PACK
+   ========================================================= */
+
+/* ⚡ Pulsing neon glow for buttons, cards, icons */
+@keyframes neonPulse {
+  0% {
+    box-shadow: 
+      0 0 5px #00eaff,
+      0 0 10px #00eaff,
+      0 0 20px #00eaff;
+  }
+  50% {
+    box-shadow: 
+      0 0 10px #00fff2,
+      0 0 25px #00fff2,
+      0 0 40px #00fff2;
+  }
+  100% {
+    box-shadow: 
+      0 0 5px #00eaff,
+      0 0 10px #00eaff,
+      0 0 20px #00eaff;
+  }
+}
+
+.neon-pulse {
+  animation: neonPulse 2.2s infinite ease-in-out;
+}
+
+
+/* 🔥 Slow glowing card border */
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(0, 255, 255, 0.4);
+    box-shadow: 
+      0 0 10px rgba(0,255,255,0.4),
+      inset 0 0 10px rgba(0,255,255,0.2);
+  }
+  50% {
+    border-color: rgba(0, 255, 255, 1);
+    box-shadow: 
+      0 0 20px rgba(0,255,255,0.8),
+      inset 0 0 20px rgba(0,255,255,0.4);
+  }
+}
+
+.neon-border-animate {
+  animation: borderGlow 3.5s infinite ease-in-out;
+}
+
+
+/* 💠 Floating animation for cards, buttons, icons */
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.float-neon {
+  animation: floatUpDown 4s infinite ease-in-out;
+}
+
+
+/* ⚡ Neon scanning line animation (cyberpunk effect) */
+@keyframes scanLine {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.neon-scan::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #00eaff,
+    transparent
+  );
+  animation: scanLine 2.7s infinite ease-in-out;
+}
