@@ -1,0 +1,24 @@
+{
+  "name": "sec-dapp-hardhat",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "node": "hardhat node",
+    "deploy:localhost": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:hardhat": "hardhat run scripts/deploy.js --network hardhat",
+
+   
+    "sync": "node ../scripts/sync.js",
+
+   
+    "deploy-and-sync": "npm run deploy:localhost && npm run sync"
+  },
+  "devDependencies": {
+    "hardhat": "^2.27.0",
+    "@nomicfoundation/hardhat-toolbox": "^6.1.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}
